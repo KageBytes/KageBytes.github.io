@@ -84,7 +84,7 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .nav-links {
@@ -104,8 +104,8 @@
       color: var(--text);
     }
 
-    /* Theme Toggle Button Icon */
-    .theme-btn {
+    /* Icon Buttons (Theme & GitHub) */
+    .icon-btn {
       background: none;
       border: none;
       color: var(--text);
@@ -116,13 +116,14 @@
       justify-content: center;
       border-radius: 50%;
       transition: background 0.2s;
+      text-decoration: none;
     }
 
-    .theme-btn:hover {
+    .icon-btn:hover {
       background: var(--border);
     }
 
-    .theme-btn svg {
+    .icon-btn svg {
       width: 18px;
       height: 18px;
       fill: currentColor;
@@ -246,17 +247,22 @@
   <nav>
     <div class="nav-container">
       <a href="#" class="nav-logo">KageBytes</a>
-      <a href="https://github.com/KageBytes" class="github-button" target="_blank" rel="noopener">
-    GitHub
-</a>
       <div class="nav-right">
         <div class="nav-links">
           <a href="#about">About</a>
           <a href="#people">Our People</a>
           <a href="#join">Join</a>
         </div>
+        
+        <!-- GitHub Organization Link Button -->
+        <a href="https://github.com/KageBytes" target="_blank" class="icon-btn" title="GitHub Organization">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+
         <!-- Theme Switcher Button Icon -->
-        <button class="theme-btn" id="theme-toggle" title="Toggle Theme">
+        <button class="icon-btn" id="theme-toggle" title="Toggle Theme">
           <svg id="theme-icon" viewBox="0 0 24 24">
             <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
           </svg>
@@ -265,17 +271,6 @@
     </div>
   </nav>
 
-<div class="social-icons">
-
-  <a href="https://github.com/KageBytes"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-
-         </div>
-  
   <header>
     <h1>KageBytes</h1>
     <p class="subtitle">open-source organization building tools, conducting technical research, and exploring cybersecurity and emerging tools.</p>
@@ -402,5 +397,3 @@
 
 </body>
 </html>
-
-
