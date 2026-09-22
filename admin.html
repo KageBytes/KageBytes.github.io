@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KageBytes Admin</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #ededed;
+      --muted: #888888;
+      --border: #222222;
+      --btn-bg: #ffffff;
+      --btn-text: #000000;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      background: var(--bg);
+      color: var(--text);
+      max-width: 680px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 20px; }
+    .card {
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .info { display: flex; flex-direction: column; gap: 4px; }
+    .username { font-weight: 600; font-size: 0.95rem; }
+    .email, .reason { font-size: 0.85rem; color: var(--muted); }
+    input {
+      background: #111;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px;
+      border-radius: 4px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    button {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+  <h1>KageBytes Applicants</h1>
+
+  <div id="auth-section">
+    <input type="password" id="secret-input" placeholder="Enter ADMIN_SECRET" />
+    <button onclick="loadRequests()">Load Applicants</button>
+  </div>
+
+  <div id="list-section" style="margin-top: 20px;"></div>
+
+  <script>
+    const WORKER_URL = "https://kagebytes-backend.kaagaazforgaming.workers.dev";
+
+    async function loadRequests() {
+      const secret = document.getElementById("secret-input").value;
+      const list = document.getElementById("list-section");
+      list.innerHTML = "Loading...";
+
+      try {
+        const res = await fetch(`${WORKER_URL}/api/requests`, {
+          headers: { "Authorization": `Bearer ${secret}` }
+        });
+
+        if (!res.ok) throw new Error("Unauthorized");
+
+        const data = await res.json();
+
+        if (data.length === 0) {
+          list.innerHTML = "<p style='color: var(--muted)'>No pending applications.</p>";
+          return;
+        }
+
+        list.innerHTML = data.map(req => `
+          <div class="card" id="card-${req.username}">
+            <div class="info">
+              <span class="username">@${req.username}</span>
+              <span class="email">${req.email}</span>
+              <span class="reason">"${req.reason}"</span>
+            </div>
+            <button onclick="approve('${req.username}')">Approve</button>
+          </div>
+        `).join("");
+
+      } catch {
+        list.innerHTML = "<p style='color: red'>Invalid ADMIN_SECRET or error fetching requests.</p>";
+      }
+    }
+
+    async function approve(username) {
+      const secret = document.getElementById("secret-input").value;
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = "Approving...";
+
+      try {
+        const res = await fetch(`${WORKER_URL}/api/approve`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${secret}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username })
+        });
+
+        if (res.ok) {
+          document.getElementById(`card-${username}`).remove();
+        } else {
+          alert("Failed to approve candidate.");
+          btn.disabled = false;
+          btn.textContent = "Approve";
+        }
+      } catch {
+        alert("Error sending approval.");
+        btn.disabled = false;
+        btn.textContent = "Approve";
+      }
+    }
+  </script>
+</body>
+</html>
