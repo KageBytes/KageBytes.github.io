@@ -4,84 +4,203 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KageBytes</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #ededed;
+      --muted: #888888;
+      --border: #222222;
+      --card-bg: #111111;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      background: var(--bg);
+      color: var(--text);
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    p.subtitle { color: var(--muted); margin-top: 0; }
+    section { margin-bottom: 40px; }
+    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 16px; }
+    
+    /* People Grid Layout */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .person-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      border: 2px solid var(--border);
+    }
+    .person-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .person-username {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    .person-username:hover { text-decoration: underline; }
+    .person-links {
+      display: flex;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+    .person-links a {
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.8;
+    }
+    .person-links a:hover { opacity: 1; text-decoration: underline; }
+
+    /* Form Styling */
+    form { display: flex; flex-direction: column; gap: 12px; max-width: 400px; }
+    input, textarea {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      border-radius: 4px;
+      font-family: inherit;
+    }
+    button {
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <a href="#home" class="brand">KageBytes</a>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#people">People</a>
-      <a href="#join">Join</a>
-      <button id="theme-toggle" type="button">Theme</button>
-    </nav>
+  <header>
+    <h1>KageBytes</h1>
+    <p class="subtitle">An open-source developer collective.</p>
   </header>
 
-  <main>
-    <!-- Home Section -->
-    <section id="home" class="section">
-      <div class="container">
-        <h1 class="hero-title">KageBytes</h1>
-        <p class="hero-subtitle">An open-source developer collective.</p>
-      </div>
-    </section>
+  <section id="about">
+    <h2>About</h2>
+    <p>KageBytes is an open organization focused on collaborative software development, open-source tools, and peer learning.</p>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-      <div class="container">
-        <h2>About</h2>
-        <p class="text-content">
-          KageBytes is an open organization focused on collaborative software development, open-source tools, and peer learning.
-        </p>
-      </div>
-    </section>
-
-    <!-- People Section -->
-    <section id="people" class="section">
-      <div class="container">
-        <h2>People</h2>
-        <div id="members-grid" class="members-grid">
-          <p class="status-text">Loading members...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Join Section -->
-    <section id="join" class="section">
-      <div class="container">
-        <h2>Join</h2>
-        <form id="join-form" class="join-form">
-          <div class="form-group">
-            <label for="username">GitHub Username</label>
-            <input type="text" id="username" autocomplete="off" required />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Contact Email</label>
-            <input type="email" id="email" autocomplete="off" required />
-          </div>
-
-          <div class="form-group">
-            <label for="reason">Reason for Joining</label>
-            <textarea id="reason" rows="3" required></textarea>
-          </div>
-
-          <button type="submit" id="submit-btn" class="btn">Submit Application</button>
-          <div id="form-message" class="status-message"></div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; <span id="year"></span> KageBytes</p>
+  <section id="people">
+    <h2>People</h2>
+    <div id="people-container" class="people-grid">
+      <p style="color: var(--muted)">Loading members...</p>
     </div>
-  </footer>
+  </section>
 
-  <script src="app.js"></script>
+  <section id="join">
+    <h2>Join</h2>
+    <form id="join-form">
+      <input type="text" id="username" placeholder="GitHub Username" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <textarea id="reason" placeholder="Why do you want to join?" rows="3" required></textarea>
+      <button type="submit">Submit Application</button>
+    </form>
+    <p id="form-msg" style="margin-top: 10px; font-size: 0.9rem;"></p>
+  </section>
+
+  <script>
+    const WORKER_URL = "https://kagebytes-backend.kaagaazforgaming.workers.dev";
+    const ORG_NAME = "KageBytes";
+
+    // 1. Fetch & Display Organization Members automatically
+    async function loadMembers() {
+      const container = document.getElementById("people-container");
+      try {
+        const res = await fetch(`https://api.github.com/orgs/${ORG_NAME}/public_members`);
+        if (!res.ok) throw new Error();
+        
+        const members = await res.json();
+
+        if (members.length === 0) {
+          container.innerHTML = "<p style='color: var(--muted)'>No public members found.</p>";
+          return;
+        }
+
+        // Fetch detailed info (blog/website URL) for each member
+        const memberDetails = await Promise.all(
+          members.map(m => fetch(`https://api.github.com/users/${m.login}`).then(r => r.json()))
+        );
+
+        container.innerHTML = memberDetails.map(user => `
+          <div class="person-card">
+            <img class="avatar" src="https://github.com/${user.login}.png" alt="${user.login}">
+            <div class="person-name">${user.name || user.login}</div>
+            <a class="person-username" href="${user.html_url}" target="_blank">@${user.login}</a>
+            <div class="person-links">
+              <a href="${user.html_url}" target="_blank">GitHub</a>
+              ${user.blog ? `• <a href="${user.blog.startsWith('http') ? user.blog : 'https://' + user.blog}" target="_blank">Website</a>` : ''}
+            </div>
+          </div>
+        `).join("");
+
+      } catch {
+        container.innerHTML = "<p style='color: var(--muted)'>Unable to load members.</p>";
+      }
+    }
+
+    // 2. Handle Application Submission
+    document.getElementById("join-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("form-msg");
+      msg.style.color = "var(--muted)";
+      msg.textContent = "Submitting...";
+
+      const payload = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        reason: document.getElementById("reason").value
+      };
+
+      try {
+        const res = await fetch(`${WORKER_URL}/api/join`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          msg.style.color = "#4caf50";
+          msg.textContent = "Application submitted successfully!";
+          document.getElementById("join-form").reset();
+        } else {
+          msg.style.color = "#f44336";
+          msg.textContent = data.error || "Failed to submit.";
+        }
+      } catch {
+        msg.style.color = "#f44336";
+        msg.textContent = "Error connecting to server.";
+      }
+    });
+
+    loadMembers();
+  </script>
+
 </body>
 </html>
-
-
