@@ -41,7 +41,7 @@
       color: var(--text);
       max-width: 800px;
       margin: 0 auto;
-      padding: 80px 20px 40px 20px;
+      padding: 80px 16px 40px 16px;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
@@ -51,7 +51,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 60px;
+      min-height: 60px;
       background: var(--nav-bg);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -65,10 +65,11 @@
     .nav-container {
       width: 100%;
       max-width: 800px;
-      padding: 0 20px;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
 
     .nav-logo {
@@ -77,24 +78,26 @@
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.5px;
+      white-space: nowrap;
     }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 12px;
     }
 
     .nav-links {
       display: flex;
-      gap: 16px;
+      gap: 12px;
     }
 
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: color 0.2s ease;
+      white-space: nowrap;
     }
 
     .nav-links a:hover {
@@ -107,7 +110,7 @@
       border: none;
       color: var(--text);
       cursor: pointer;
-      padding: 6px;
+      padding: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -120,34 +123,34 @@
     }
 
     .theme-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
     }
 
     /* Header Section */
     header { 
-      margin-bottom: 50px; 
+      margin-bottom: 40px; 
       padding-top: 20px;
     }
     h1 { font-size: 2.2rem; margin-bottom: 8px; letter-spacing: -1px; }
-    p.subtitle { color: var(--muted); font-size: 1.1rem; margin-top: 0; }
+    p.subtitle { color: var(--muted); font-size: 1rem; margin-top: 0; }
     
     /* Content Sections */
-    section { margin-bottom: 60px; scroll-margin-top: 80px; }
-    h2 { font-size: 1.3rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 24px; }
+    section { margin-bottom: 50px; scroll-margin-top: 80px; }
+    h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 20px; }
     
-    /* People Grid */
+    /* Responsive People Grid */
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
     }
     .person-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 20px;
+      padding: 14px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -158,28 +161,32 @@
       background: var(--card-hover);
     }
     .avatar {
-      width: 80px;
-      height: 80px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      margin-bottom: 12px;
-      border: 2px solid var(--border);
+      margin-bottom: 8px;
+      border: 1.5px solid var(--border);
     }
     .person-name {
       font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 4px;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+      word-break: break-word;
     }
     .person-username {
       color: var(--muted);
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-decoration: none;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      word-break: break-all;
     }
     .person-username:hover { text-decoration: underline; }
     .person-links {
       display: flex;
-      gap: 10px;
-      font-size: 0.85rem;
+      gap: 6px;
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .person-links a {
       color: var(--text);
@@ -189,16 +196,18 @@
     .person-links a:hover { opacity: 1; text-decoration: underline; }
 
     /* Form Design */
-    form { display: flex; flex-direction: column; gap: 14px; max-width: 480px; }
+    form { display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
     input, textarea {
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 12px;
+      padding: 10px 12px;
       border-radius: 6px;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
     input:focus, textarea:focus {
       outline: none;
@@ -208,14 +217,27 @@
       background: var(--btn-bg);
       color: var(--btn-text);
       border: none;
-      padding: 12px;
+      padding: 10px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: opacity 0.2s, background 0.3s ease;
     }
     button[type="submit"]:hover { opacity: 0.9; }
+
+    /* Mobile Responsive Tweaks */
+    @media (max-width: 480px) {
+      .nav-links {
+        gap: 8px;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+      }
+      .people-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
@@ -226,7 +248,7 @@
       <a href="#" class="nav-logo">KageBytes</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="#about">About Us</a>
+          <a href="#about">About</a>
           <a href="#people">Our People</a>
           <a href="#join">Join</a>
         </div>
@@ -247,7 +269,7 @@
 
   <section id="about">
     <h2>About Us</h2>
-    <p style="line-height: 1.6; color: var(--muted);">
+    <p style="line-height: 1.6; color: var(--muted); font-size: 0.95rem;">
       KageBytes is an open organization focused on collaborative software development, open-source tools, and peer learning. We bring developers together to build impactful projects in the open.
     </p>
   </section>
@@ -267,7 +289,7 @@
       <textarea id="reason" placeholder="Why do you want to join?" rows="3" required></textarea>
       <button type="submit">Submit Application</button>
     </form>
-    <p id="form-msg" style="margin-top: 12px; font-size: 0.9rem;"></p>
+    <p id="form-msg" style="margin-top: 12px; font-size: 0.85rem;"></p>
   </section>
 
   <script>
