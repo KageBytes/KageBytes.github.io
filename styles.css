@@ -53,6 +53,23 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
+
+.github-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    color: #000;
+    background: #fff;
+    text-decoration: none;
+    font-family: inherit;
+    transition: 0.2s ease;
+}
+
+.github-button:hover {
+    background: #000;
+    color: #fff;
+}
 .brand {
   font-weight: 600;
   font-size: 1rem;
