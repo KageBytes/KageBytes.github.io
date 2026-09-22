@@ -10,8 +10,10 @@
       --text: #ededed;
       --muted: #888888;
       --border: #222222;
-      --btn-bg: #ffffff;
-      --btn-text: #000000;
+      --btn-approve-bg: #ffffff;
+      --btn-approve-text: #000000;
+      --btn-decline-bg: #e55353;
+      --btn-decline-text: #ffffff;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
@@ -30,10 +32,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 16px;
     }
-    .info { display: flex; flex-direction: column; gap: 4px; }
+    .info { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; }
     .username { font-weight: 600; font-size: 0.95rem; }
     .email, .reason { font-size: 0.85rem; color: var(--muted); }
+    .actions { display: flex; gap: 8px; }
     input {
       background: #111;
       border: 1px solid var(--border);
@@ -44,14 +48,20 @@
       margin-bottom: 12px;
     }
     button {
-      background: var(--btn-bg);
-      color: var(--btn-text);
       border: none;
       padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 500;
+    }
+    .btn-approve {
+      background: var(--btn-approve-bg);
+      color: var(--btn-approve-text);
+    }
+    .btn-decline {
+      background: var(--btn-decline-bg);
+      color: var(--btn-decline-text);
     }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
@@ -62,7 +72,7 @@
 
   <div id="auth-section">
     <input type="password" id="secret-input" placeholder="Enter ADMIN_SECRET" />
-    <button onclick="loadRequests()">Load Applicants</button>
+    <button class="btn-approve" onclick="loadRequests()">Load Applicants</button>
   </div>
 
   <div id="list-section" style="margin-top: 20px;"></div>
@@ -96,7 +106,10 @@
               <span class="email">${req.email}</span>
               <span class="reason">"${req.reason}"</span>
             </div>
-            <button onclick="approve('${req.username}')">Approve</button>
+            <div class="actions">
+              <button class="btn-approve" onclick="approve('${req.username}')">Approve</button>
+              <button class="btn-decline" onclick="decline('${req.username}')">Decline</button>
+            </div>
           </div>
         `).join("");
 
@@ -107,9 +120,9 @@
 
     async function approve(username) {
       const secret = document.getElementById("secret-input").value;
-      const btn = event.target;
-      btn.disabled = true;
-      btn.textContent = "Approving...";
+      const card = document.getElementById(`card-${username}`);
+      const buttons = card.querySelectorAll("button");
+      buttons.forEach(b => b.disabled = true);
 
       try {
         const res = await fetch(`${WORKER_URL}/api/approve`, {
@@ -122,16 +135,44 @@
         });
 
         if (res.ok) {
-          document.getElementById(`card-${username}`).remove();
+          card.remove();
         } else {
           alert("Failed to approve candidate.");
-          btn.disabled = false;
-          btn.textContent = "Approve";
+          buttons.forEach(b => b.disabled = false);
         }
       } catch {
         alert("Error sending approval.");
-        btn.disabled = false;
-        btn.textContent = "Approve";
+        buttons.forEach(b => b.disabled = false);
+      }
+    }
+
+    async function decline(username) {
+      if (!confirm(`Are you sure you want to decline @${username}?`)) return;
+
+      const secret = document.getElementById("secret-input").value;
+      const card = document.getElementById(`card-${username}`);
+      const buttons = card.querySelectorAll("button");
+      buttons.forEach(b => b.disabled = true);
+
+      try {
+        const res = await fetch(`${WORKER_URL}/api/decline`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${secret}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username })
+        });
+
+        if (res.ok) {
+          card.remove();
+        } else {
+          alert("Failed to decline candidate.");
+          buttons.forEach(b => b.disabled = false);
+        }
+      } catch {
+        alert("Error sending decline.");
+        buttons.forEach(b => b.disabled = false);
       }
     }
   </script>
