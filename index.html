@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KageBytes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="#home" class="brand">KageBytes</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#people">People</a>
+      <a href="#join">Join</a>
+      <button id="theme-toggle" type="button">Theme</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home Section -->
+    <section id="home" class="section">
+      <div class="container">
+        <h1 class="hero-title">KageBytes</h1>
+        <p class="hero-subtitle">An open-source developer collective.</p>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2>About</h2>
+        <p class="text-content">
+          KageBytes is an open organization focused on collaborative software development, open-source tools, and peer learning.
+        </p>
+      </div>
+    </section>
+
+    <!-- People Section -->
+    <section id="people" class="section">
+      <div class="container">
+        <h2>People</h2>
+        <div id="members-grid" class="members-grid">
+          <p class="status-text">Loading members...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Section -->
+    <section id="join" class="section">
+      <div class="container">
+        <h2>Join</h2>
+        <form id="join-form" class="join-form">
+          <div class="form-group">
+            <label for="username">GitHub Username</label>
+            <input type="text" id="username" autocomplete="off" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Contact Email</label>
+            <input type="email" id="email" autocomplete="off" required />
+          </div>
+
+          <div class="form-group">
+            <label for="reason">Reason for Joining</label>
+            <textarea id="reason" rows="3" required></textarea>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn">Submit Application</button>
+          <div id="form-message" class="status-message"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> KageBytes</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
