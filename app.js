@@ -1,5 +1,5 @@
 const GITHUB_ORG_NAME = "KageBytes";
-const WORKER_URL = "https://your-worker.your-subdomain.workers.dev"; // Will replace when backend is ready
+const WORKER_URL = "https://kagebytes-backend.kaagaazforgaming.workers.dev";
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = new Date().getFullYear();
@@ -74,22 +74,24 @@ function initFormHandler() {
     msgContainer.textContent = "";
 
     try {
-      /* Connected when backend is set up:
       const res = await fetch(`${WORKER_URL}/api/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      */
 
-      await new Promise(r => setTimeout(r, 800)); // Simulated delay
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Submission failed.");
+      }
 
       msgContainer.className = "status-message success";
       msgContainer.textContent = "Application submitted.";
       form.reset();
-    } catch {
+    } catch (err) {
       msgContainer.className = "status-message error";
-      msgContainer.textContent = "Submission failed.";
+      msgContainer.textContent = err.message || "Submission failed.";
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Submit Application";
